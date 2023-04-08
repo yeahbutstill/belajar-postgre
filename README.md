@@ -19,3 +19,9 @@ docker compose config ### map env
 docker compose up ### run
 docker compose exec postgres psql -U postgres -W ### login
 ```
+
+Untuk meng-aktifikan container pgadmin4 tersebut, kita perlu menggunakan profile debug dengan perintah seperti berikut:
+
+```shell
+docker compose -f docker-compose.yaml --env-file .env --profile debug up
+```
