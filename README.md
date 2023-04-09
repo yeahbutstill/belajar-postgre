@@ -54,3 +54,24 @@ docker compose \
 --env-file .env \
 exec postgres psql -U hr -W
 ```
+
+## Backup
+```shell
+docker compose \           
+-f docker-compose.yml \
+--env-file .env \
+exec postgres pg_dump -U hr -W -d hr --no-privileges --insert --encoding utf8 -h localhost> backup/hr-09-04-23.sql
+```
+
+## Create database
+```shell
+docker compose \           
+-f docker-compose.yml \
+--env-file .env \
+exec postgres createdb -U hr -W hr_temp 
+```
+
+## Restore
+```shell
+docker compose exec postgres psql -U hr -d hr -W -d hr_temp -f backup/hr-09-04-23.sql 
+```
