@@ -13,15 +13,44 @@ docker run --rm \
 postgres:15
 ```
 
-Menjalankan dengan Docker Compose
+## Menjalankan dengan Docker Compose
 ```shell
 docker compose config ### map env
-docker compose up ### run
+docker compose -f docker-compose.yml --env-file .env --profile debug up
 docker compose exec postgres psql -U postgres -W ### login
 ```
 
-Untuk meng-aktifikan container pgadmin4 tersebut, kita perlu menggunakan profile debug dengan perintah seperti berikut:
-
+## Create User
 ```shell
-docker compose -f docker-compose.yaml --env-file .env --profile debug up
+-- create user schema database
+CREATE USER hr WITH SUPERUSER LOGIN PASSWORD 'hr';
+
+-- create database
+CREATE DATABASE hr WITH OWNER hr;
+```
+
+## Run migrationnya dengan perintah
+```shell
+docker compose \
+-f docker-compose.yml \
+--env-file .env \
+--profile migrate up
+```
+Jika sudah sekarang kita bisa check dengan perintah berikut:
+```shell
+docker compose \
+-f docker-compose.yml \
+--env-file .env \
+exec postgres psql -U hr -W -c "\dt"
+```
+coba kita hapus
+```shell
+docker compose down --volumes
+#### lalu jalankan lagi
+docker compose --profile migrate up
+#### lalu login kembali menggunakan user hr
+docker compose \
+-f docker-compose.yml \
+--env-file .env \
+exec postgres psql -U hr -W
 ```

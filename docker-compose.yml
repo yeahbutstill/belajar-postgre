@@ -1,4 +1,4 @@
-version: '3.6'
+version: "3.9"
 services:
   postgres:
     image: ${PRIVATE_REPOSITORY}postgres:${POSTGRES_VERSION}
@@ -9,10 +9,10 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - "5432:5432"
 
   flyway:
-    image: ${PRIVATE_REPOSITORY}flyway/flyway
+    image: ${PRIVATE_REPOSITORY}redgate/flyway
     command: -url=jdbc:postgresql://postgres:5432/hr -user=hr -password=hr -connectRetries=60 migrate info
     profiles:
       - migrate
@@ -29,7 +29,7 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=${POSTGRES_PASSWORD}
       - PGADMIN_DEFAULT_EMAIL=${POSTGRES_USER}@example.com
     ports:
-      - 55432:80
+      - "55432:80"
     volumes:
       - pg_admin_data:/var/lib/pgadmin
     depends_on:
