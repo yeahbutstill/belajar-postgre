@@ -75,3 +75,12 @@ exec postgres createdb -U hr -W hr_temp
 ```shell
 docker compose exec postgres psql -U hr -d hr -W -d hr_temp -f backup/hr-09-04-23.sql 
 ```
+
+## Run PgAdmin4
+```shell
+docker compose \                                                                                                          
+-f docker-compose.yml \
+--env-file .env \
+--profile debug up
+```
+
