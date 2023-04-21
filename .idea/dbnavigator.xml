@@ -21,11 +21,17 @@
   </component>
   <component name="DBNavigator.Project.FileConnectionMappingManager">
     <mapping file-url="file://$PROJECT_DIR$/sql/01-select/elimination_of_duplicate_rows.sql" connection-id="26abf865-b64b-4690-acd4-a1d86d252160" session-id="MAIN" current-schema="public" />
+    <mapping file-url="file://$PROJECT_DIR$/sql/01-select/using_math_operator.sql" connection-id="26abf865-b64b-4690-acd4-a1d86d252160" session-id="MAIN" current-schema="public" />
     <mapping file-url="file://$PROJECT_DIR$/sql/01-select/column_label_in_select_statement.sql" connection-id="26abf865-b64b-4690-acd4-a1d86d252160" session-id="MAIN" current-schema="public" />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
     <filters />
+  </component>
+  <component name="DBNavigator.Project.ScriptExecutionManager" clear-outputs="true">
+    <recently-used-interfaces>
+      <mapping database-type="POSTGRES" interface-id="DEFAULT" />
+    </recently-used-interfaces>
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>

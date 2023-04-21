@@ -1,0 +1,11 @@
+select current_date - 2 as lusa,
+       current_date + 1 as besok,
+       date '2023-04-22' - 2 as kurang_2_hari,
+       date '2023-04-22' - interval '17 hour' as kurang_17_jam,
+       date '2023-04-22' + 1 as tambah_1_hari,
+--    date '2023-04-22' + date '2023-05-22' as gak_boleh,
+       date '2023-03-30' - date '2023-03-15' as durasi_dalam_hari,
+       timestamp '2023-03-28 18:20:00' - interval '15 hour' as kurang_15_jam,
+       date '2023-03-28' + interval '26 day' as target_harus_selesai,
+       timestamp '2023-03-02 12:04:30' + interval '15 minutes' as jam_makan_siang,
+       current_timestamp + interval '2 hour' as kurang_2_jam;
