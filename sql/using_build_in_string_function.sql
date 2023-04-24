@@ -9,3 +9,9 @@ select substring('Dani Setiawan' from 1 for 3) as substring_from,
     length('dani setiawan') as "length",
     concat('yeahbutstill', ' : ', 'Dani Setiawan') as "concat",
     ascii('D') as "ascii";
+
+select concat(first_name, ' ', last_name) as fullname,
+       lower(email) as lower_email,
+       reverse(last_name) as last_name_reverse,
+       length(concat(first_name, ' ', last_name)) as length_from_concat
+from employees;
