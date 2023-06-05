@@ -9,3 +9,5 @@ q
 Asql/01-select/using_row_and_array_comparasion_in_where_clause.sql,1/f/1ff2a1885c74f5d94261d718c172206e2746030e
 ^
 .sql/01-select/basic_use_of_order_by_clause.sql,6/4/64dc2fd61ef9bfc182a63de76b8caaf74f5db1bc
+U
+%sql/01-select/the_sort_expression.sql,2/0/20028f9361872fedac4b3d2bb3ce87a5bf63c3db
