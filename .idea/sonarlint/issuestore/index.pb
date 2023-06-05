@@ -11,3 +11,13 @@ Asql/01-select/using_row_and_array_comparasion_in_where_clause.sql,1/f/1ff2a188
 .sql/01-select/basic_use_of_order_by_clause.sql,6/4/64dc2fd61ef9bfc182a63de76b8caaf74f5db1bc
 U
 %sql/01-select/the_sort_expression.sql,2/0/20028f9361872fedac4b3d2bb3ce87a5bf63c3db
+`
+0sql/01-select/using_multiple_columns_to_sort.sql,d/6/d6c0237e5267a0dd9dcfbf164c1670f2e9e70379
+r
+Bsql/01-select/choose_null_value_show_position_at_first_or_last.sql,a/9/a9742a3b309bc97bcc28bb16ed3418f4962b1720
+W
+'sql/01-select/using_limit_data_rows.sql,c/6/c63bb4f80128a6675e423294263ff2de8288369c
+S
+#sql/01-select/using_offset_data.sql,0/b/0be93e4ba621f0810570d955472d924169b61b72
+_
+/sql/01-select/elimination_of_duplicate_rows.sql,a/8/a81ca24964387ab5fab86900bde7cebf7ca63c03
