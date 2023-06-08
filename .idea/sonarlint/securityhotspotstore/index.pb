@@ -21,3 +21,9 @@ S
 #sql/01-select/using_offset_data.sql,0/b/0be93e4ba621f0810570d955472d924169b61b72
 _
 /sql/01-select/elimination_of_duplicate_rows.sql,a/8/a81ca24964387ab5fab86900bde7cebf7ca63c03
+T
+$sql/01-select/aggregate_function.sql,c/7/c7617fc26d4a61a01454282793f122dcb9d5fecb
+P
+ sql/01-select/using_group_by.sql,5/2/52d96c360bf4b0507955e139f5768afd154e0529
+U
+%sql/01-select/using_having_clause.sql,1/a/1a7196cc6212c612ee43d5fc6c832667cabd4444
