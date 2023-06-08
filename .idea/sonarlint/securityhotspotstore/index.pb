@@ -27,3 +27,7 @@ P
  sql/01-select/using_group_by.sql,5/2/52d96c360bf4b0507955e139f5768afd154e0529
 U
 %sql/01-select/using_having_clause.sql,1/a/1a7196cc6212c612ee43d5fc6c832667cabd4444
+Y
+)sql/01-select/having_and_where_clause.sql,6/6/66827fdeba21c9db9c60a089d8de5dc0e62a05b5
+T
+$sql/01-select/using_grouping_set.sql,d/f/df027013992d34ce5b74d292de08b46b04b97ebf
