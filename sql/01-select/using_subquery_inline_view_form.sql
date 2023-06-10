@@ -10,3 +10,4 @@ FROM employees AS emp,
              MAX(j.max_salary) AS max
              FROM jobs AS j) AS func
 WHERE emp.salary >= func.rata_rata;
+
