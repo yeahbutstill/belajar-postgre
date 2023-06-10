@@ -31,3 +31,5 @@ Y
 )sql/01-select/having_and_where_clause.sql,6/6/66827fdeba21c9db9c60a089d8de5dc0e62a05b5
 T
 $sql/01-select/using_grouping_set.sql,d/f/df027013992d34ce5b74d292de08b46b04b97ebf
+o
+?sql/01-select/using_subquery_as_predicate_with_where_clause.sql,e/b/eb63a5d96a68ed04ba44c366b2e1573ba1911043
