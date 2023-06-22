@@ -33,3 +33,9 @@ T
 $sql/01-select/using_grouping_set.sql,d/f/df027013992d34ce5b74d292de08b46b04b97ebf
 o
 ?sql/01-select/using_subquery_as_predicate_with_where_clause.sql,e/b/eb63a5d96a68ed04ba44c366b2e1573ba1911043
+j
+:sql/01-select/using_subquery_for_single_row_comparison.sql,e/8/e8704a7324428a808e576b2bebddae6c2e9766cb
+d
+4sql/01-select/using_subquery_for_exists_operator.sql,1/9/190acf19f8760d00fd0550791b1eb216e236dbe2
+b
+2sql/01-select/using_subquery_with_in_predicate.sql,0/c/0cd9e8276358ec26e8e0350a87048034c92adaaa
