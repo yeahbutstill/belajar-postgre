@@ -10,3 +10,5 @@
 /ZeppelinRemoteNotebooks/
 # Docker postgresql
 /belajar-db-data
+/pg_data
+/pg_admin_data

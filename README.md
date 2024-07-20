@@ -10,13 +10,13 @@ docker run --rm \
 -e PGDATA=/var/lib/postgresql/data/pgdata \
 -v "$PWD/belajar-db-data:/var/lib/postgresql/data" \
 -p 5432:5432 \
-postgres:15
+postgres:16.3-alpine3.20
 ```
 
 ## Menjalankan dengan Docker Compose
 ```shell
 docker compose config ### map env
-docker compose -f docker-compose.yml --env-file .env --profile debug up
+docker compose -f compose.yaml --env-file .env --profile debug up
 docker compose exec postgres psql -U postgres -W ### login
 ```
 
@@ -32,14 +32,14 @@ CREATE DATABASE hr WITH OWNER hr;
 ## Run migrationnya dengan perintah
 ```shell
 docker compose \
--f docker-compose.yml \
+-f compose.yaml \
 --env-file .env \
 --profile migrate up
 ```
 Jika sudah sekarang kita bisa check dengan perintah berikut:
 ```shell
 docker compose \
--f docker-compose.yml \
+-f compose.yaml \
 --env-file .env \
 exec postgres psql -U hr -W -c "\dt"
 ```
@@ -50,7 +50,7 @@ docker compose down --volumes
 docker compose --profile migrate up
 #### lalu login kembali menggunakan user hr
 docker compose \
--f docker-compose.yml \
+-f compose.yaml \
 --env-file .env \
 exec postgres psql -U hr -W
 ```
@@ -58,7 +58,7 @@ exec postgres psql -U hr -W
 ## Backup
 ```shell
 docker compose \           
--f docker-compose.yml \
+-f compose.yaml \
 --env-file .env \
 exec postgres pg_dump -U hr -W -d hr --no-privileges --insert --encoding utf8 -h localhost> backup/hr-09-04-23.sql
 ```
@@ -66,7 +66,7 @@ exec postgres pg_dump -U hr -W -d hr --no-privileges --insert --encoding utf8 -h
 ## Create database
 ```shell
 docker compose \           
--f docker-compose.yml \
+-f compose.yaml \
 --env-file .env \
 exec postgres createdb -U hr -W hr_temp 
 ```
@@ -79,7 +79,7 @@ docker compose exec postgres psql -U hr -d hr -W -d hr_temp -f backup/hr-09-04-2
 ## Run PgAdmin4
 ```shell
 docker compose \                                                                                                          
--f docker-compose.yml \
+-f compose.yaml \
 --env-file .env \
 --profile debug up
 ```
