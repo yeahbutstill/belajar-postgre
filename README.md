@@ -83,6 +83,84 @@ docker compose \
 --env-file .env \
 --profile debug up
 ```
+# CDC dengan Debezium, Kafka, Postgres, Docker
+
+## Ringkasan
+
+Skrip Python ini dirancang untuk menghasilkan simulasi transaksi keuangan dan memasukkannya ke dalam database PostgreSQL. Ini sangat berguna untuk menyiapkan lingkungan pengujian untuk Change Data Capture (CDC) dengan Debezium. Skrip ini menggunakan pustaka `faker` untuk membuat data transaksi yang realistis namun fiktif dan memasukkannya ke dalam tabel PostgreSQL.
+
+## Prasyarat
+
+Sebelum menjalankan skrip ini, pastikan Anda telah menginstal yang berikut ini:
+-Python 3.9+
+- Perpustakaan `psycopg2` untuk Python
+- Perpustakaan `faker` untuk Python
+- Server PostgreSQL berjalan secara lokal atau dapat diakses dari jarak jauh
+- Docker dan Docker Compose diinstal pada mesin Anda.
+- Pemahaman dasar tentang Docker, Kafka, dan Postgres.
+
+## Instalasi
+
+1. **Instal Library Python yang Diperlukan:**
+
+Anda dapat menginstal perpustakaan yang diperlukan menggunakan pip:
+
+ ```bash
+ pip install psycopg2-binary faker
+ ```
+
+## Layanan di File Tulis
+
+- **Zookeeper:** Layanan terpusat untuk memelihara informasi konfigurasi, memberi nama, menyediakan sinkronisasi terdistribusi, dan menyediakan layanan grup.
+- **Kafka Broker:** Platform streaming terdistribusi yang digunakan di sini untuk menangani umpan data waktu nyata.
+- **Confluent Control Center:** Alat berbasis web untuk mengelola dan memantau Apache Kafka.
+- **Debezium:** Platform terdistribusi sumber terbuka untuk pengambilan data perubahan.
+- **Debezium UI:** Antarmuka pengguna untuk mengelola dan memantau konektor Debezium.
+- **Postgres:** Database relasional sumber terbuka.
+
+## Getting Started
+
+1. **Kloning Repositori:**
+   Pastikan Anda memiliki file Docker Compose ini di sistem lokal Anda. Jika itu bagian dari repositori, kloning repositori tersebut ke mesin lokal Anda.
+
+2. **Navigasi ke Direktori:**
+   Buka terminal dan navigasikan ke direktori yang berisi file Docker Compose.
+
+3. **Jalankan Docker Compose:**
+   Jalankan perintah berikut untuk memulai semua layanan yang ditentukan dalam file Docker Compose:
+
+ ```bash
+ docker compose up -d
+ ```
+
+Perintah ini akan mengunduh image Docker yang diperlukan, membuat container, dan memulai layanan dalam mode terpisah.
+
+4. **Verifikasi Layanan:**
+   Periksa apakah semua layanan aktif dan berjalan:
+
+ ```bash
+ docker compose ps
+ ```
+
+Anda akan melihat semua layanan terdaftar sebagai 'running'.
+
+5. **Mengakses Layanan:**
+- Pusat Kontrol Kafka dapat diakses di `http://localhost:9021`.
+- Debezium UI dapat diakses di `http://localhost:8080`.
+- Postgres dapat diakses pada port default `5432`.
+
+6. **Shutting Down:**
+   Untuk menghentikan dan menghapus kontainer, jaringan, dan volume, jalankan:
+
+ ```bash
+ docker compose down
+ ```
+
+## Kustomisasi
+Anda dapat memodifikasi file Docker Compose sesuai kebutuhan Anda. Misalnya, Anda mungkin ingin mempertahankan data di Postgres dengan menambahkan volume untuk layanan Postgres.
+
+## Catatan
+Pengaturan ini dimaksudkan untuk tujuan pengembangan dan pengujian. Untuk lingkungan produksi, pertimbangkan faktor tambahan seperti keamanan, skalabilitas, dan persistensi data.
 
 ## Soal
 ### Questions for this assignment
