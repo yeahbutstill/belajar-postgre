@@ -39,6 +39,9 @@ RETURNS TRIGGER AS $$
 DECLARE
     change_details JSONB;
 BEGIN
+    NEW.modified_by := current_user;
+    NEW.modified_at := CURRENT_TIMESTAMP;
+
     change_details := '{}'::JSONB; -- Initialize an empty JSONB object
 
     -- Check each column for changes and record as necessary
