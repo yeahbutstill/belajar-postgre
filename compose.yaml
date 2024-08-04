@@ -1,23 +1,6 @@
 services:
-  zookeeper:
-    image: confluentinc/cp-zookeeper:7.4.0
-    hostname: zookeeper
-    container_name: zookeeper
-    ports:
-      - '2181:2181'
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-    healthcheck:
-      test: echo srvr | nc zookeeper 2181 || exit 1
-      start_period: 10s
-      retries: 20
-      interval: 10s
-    networks:
-      yeahbutstill-net:
-
   broker:
-    image: confluentinc/cp-kafka:7.4.0
+    image: confluentinc/cp-kafka:7.7.0
     hostname: broker
     container_name: broker
     ports:
@@ -25,17 +8,25 @@ services:
       - '9092:9092'
       - '9101:9101'
     environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_NODE_ID: 1
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://broker:29092,PLAINTEXT_HOST://localhost:9092'
+      KAFKA_JMX_PORT: 9101
+      KAFKA_JMX_HOSTNAME: localhost
+      KAFKA_PROCESS_ROLES: 'broker,controller'
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@broker:29093'
+      KAFKA_LISTENERS: 'PLAINTEXT://broker:29092,CONTROLLER://broker:29093,PLAINTEXT_HOST://0.0.0.0:9092'
+      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
+      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+      CLUSTER_ID: 'KHhoZCQvTm6zgq3gPpEz1A'
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
-      KAFKA_JMX_PORT: 9101
-      KAFKA_JMX_HOSTNAME: localhost
+      KAFKA_LOG_DIRS: 'data'
+    volumes:
+      - './data:/data'
     healthcheck:
       test: nc -z localhost 9092 || exit -1
       start_period: 15s
@@ -46,7 +37,7 @@ services:
       yeahbutstill-net:
 
   control-center:
-    image: confluentinc/cp-enterprise-control-center:7.4.0
+    image: confluentinc/cp-enterprise-control-center:7.7.0
     hostname: control-center
     container_name: control-center
     depends_on:
@@ -57,8 +48,8 @@ services:
     environment:
       CONTROL_CENTER_BOOTSTRAP_SERVERS: 'broker:29092'
       CONTROL_CENTER_REPLICATION_FACTOR: 1
-      CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
       CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
+      CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
       CONFLUENT_METRICS_TOPIC_REPLICATION: 1
       CONFLUENT_METRICS_ENABLE: 'true'
       PORT: 9021
@@ -71,7 +62,7 @@ services:
       retries: 5
 
   debezium:
-    image: debezium/connect:latest
+    image: debezium/connect:2.7.0.Final
     container_name: debezium
     hostname: debezium
     depends_on:
@@ -102,7 +93,7 @@ services:
       yeahbutstill-net:
 
   debezium-ui:
-    image: debezium/debezium-ui:latest
+    image: debezium/debezium-ui:2.1.2.Final
     container_name: debezium-ui
     hostname: debezium-ui
     depends_on:
@@ -116,7 +107,7 @@ services:
       yeahbutstill-net:
 
   postgres:
-    image: '${PRIVATE_REPOSITORY}postgres:${POSTGRES_VERSION}'
+    image: 'postgres:${POSTGRES_VERSION}'
     container_name: postgres
     hostname: postgres
     ports:
@@ -137,7 +128,7 @@ services:
       yeahbutstill-net:
 
   flyway:
-    image: '${PRIVATE_REPOSITORY}redgate/flyway'
+    image: 'redgate/flyway:10.17'
     command: -url=jdbc:postgresql://postgres:5432/hr -user=hr -password=hr -connectRetries=60 migrate info
     profiles:
       - migrate
@@ -149,7 +140,7 @@ services:
       yeahbutstill-net:
 
   pgadmin4:
-    image: '${PRIVATE_REPOSITORY}dpage/pgadmin4'
+    image: 'elestio/pgadmin:REL-8_10'
     profiles:
       - debug
     environment:
@@ -157,8 +148,8 @@ services:
       - 'PGADMIN_DEFAULT_PASSWORD=${POSTGRES_PASSWORD}'
     ports:
       - '55432:80'
-    #    volumes:
-    #      - './pg_admin_data:/var/lib/pgadmin'
+    volumes:
+      - './pg_admin_data:/var/lib/pgadmin'
     depends_on:
       - postgres
     networks:
@@ -171,4 +162,5 @@ networks:
 
 volumes:
   pg_data:
-#  pg_admin_data:
+  data:
+  pg_admin_data:
