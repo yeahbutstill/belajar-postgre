@@ -176,6 +176,77 @@ isi Bodynya:
 }
 ```
 
+Selanjutnya masuk ke database hr, lalu tambahkan column ini:
+```sql
+alter table transactions add column modified_by text;
+alter table transactions add column modified_at timestamp;
+```
+
+lanjut buat functionnya:
+```sql
+create or replace function record_change_user()
+returns trigger as $$
+
+begin
+
+new.modified_by := current_user;
+new.modified_at := current_timestamp;
+return new;
+    
+end;
+
+$$ language plpgsql;
+
+```
+
+buat triggernya:
+```sql
+create trigger trigger_record_user_update
+before update on transactions
+for each row execute function record_change_user();
+```
+
+hapus trigger:
+```sql
+drop trigger trigger_record_user_update on transactions;
+```
+
+Buat function change column dengan format json:
+```sql
+-- capture the changes to specific columns into json object
+CREATE OR REPLACE FUNCTION record_changed_columns()
+RETURNS TRIGGER AS $$
+DECLARE
+    change_details JSONB;
+BEGIN
+    NEW.modified_by := current_user;
+    NEW.modified_at := CURRENT_TIMESTAMP;
+
+    change_details := '{}'::JSONB; -- Initialize an empty JSONB object
+
+    -- Check each column for changes and record as necessary
+    IF NEW.amount IS DISTINCT FROM OLD.amount THEN
+        change_details := jsonb_insert(change_details, '{amount}', jsonb_build_object('old', OLD.amount, 'new', NEW.amount));
+    END IF;
+
+    -- Add user and timestamp
+    change_details := change_details || jsonb_build_object('modified_by', current_user, 'modified_at', now());
+
+    -- Update the change_info column
+    NEW.change_info := change_details;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+```
+
+jangan lupa buat triggernya:
+```sql
+create trigger trigger_record_change_info
+before update on transactions
+for each row execute function record_change_columns();
+```
+
 6. **Shutting Down:**
    Untuk menghentikan dan menghapus kontainer, jaringan, dan volume, jalankan:
 
