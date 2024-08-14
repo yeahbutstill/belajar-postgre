@@ -149,6 +149,33 @@ Anda akan melihat semua layanan terdaftar sebagai 'running'.
 - Debezium UI dapat diakses di `http://localhost:8080`.
 - Postgres dapat diakses pada port default `5432`.
 
+Jangan lupa ubah replica indentity full ke table-table kalian
+```sql
+alter table transactions replica identity full;
+```
+
+Setelah itu daftarkan konektor Database ke Debezium melalu API Debezium dengan Postman kita arahkan ke URL http://localhost:8093/connectors
+
+isi Bodynya:
+```json
+{
+  "name": "postgres-connector-hr",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "plugin.name": "pgoutput",
+    "database.hostname": "postgres",
+    "database.port": "5432",
+    "database.user": "hr",
+    "database.password": "hr",
+    "database.dbname": "hr",
+    "database.server.name": "postgres",
+    "table.include.list": "public.transactions, public.countries, public.departments, public.employes, public.flyway_schema_history, public.job_history, public.jobs, public.locations, public.regions",
+    "topic.prefix": "hr-cdc",
+    "decimal.handling.mode": "string"
+  }
+}
+```
+
 6. **Shutting Down:**
    Untuk menghentikan dan menghapus kontainer, jaringan, dan volume, jalankan:
 
